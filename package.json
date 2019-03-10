@@ -1,0 +1,28 @@
+{
+  "name": "proper-react-modal",
+  "version": "1.0.0",
+  "description": "The proper (and easy) way of doing modals in React",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prezly/proper-react-modal.git"
+  },
+  "keywords": [
+    "react",
+    "modal",
+    "promise",
+    "async",
+    "await",
+    "confirmation"
+  ],
+  "author": "Ivan Voskboinyk <ivan@prezly.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prezly/proper-react-modal/issues"
+  },
+  "homepage": "https://github.com/prezly/proper-react-modal#readme",
+  "dependencies": {}
+}
