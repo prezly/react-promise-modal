@@ -2,7 +2,7 @@
   "name": "proper-react-modal",
   "version": "1.0.0",
   "description": "The proper (and easy) way of doing modals in React",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel src/index.js > dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,9 +29,13 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4"
+    "@babel/preset-env": "^7.3.4",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "peerDependencies": {
+    "react": "*",
     "react-dom": "*"
-  }
+  },
+  "types": "./src/index.d.ts"
 }

@@ -26,8 +26,8 @@ export default async function reactModal(renderModal, options = {}) {
     }
 
     const confirmation = new Promise((resolve) => {
-        const onConfirm = () => resolve(true);
-        const onCancel = () => resolve(false);
+        const onConfirm = (value = true) => resolve(value);
+        const onCancel = () => resolve(undefined);
         displayModal({ onConfirm, onCancel });
     });
 
