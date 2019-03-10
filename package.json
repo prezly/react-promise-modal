@@ -4,6 +4,7 @@
   "description": "The proper (and easy) way of doing modals in React",
   "main": "src/index.js",
   "scripts": {
+    "build": "babel src/index.js > dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +25,10 @@
     "url": "https://github.com/prezly/proper-react-modal/issues"
   },
   "homepage": "https://github.com/prezly/proper-react-modal#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4"
+  }
 }

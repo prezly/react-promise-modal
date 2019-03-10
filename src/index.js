@@ -1,5 +1,3 @@
-function reactConfirmation() {
+export default function reactModal() {
 
 }
-
-module.exports = reactConfirmation;
