@@ -1,3 +1,5 @@
+.PHONY: publish
+
 dist/react-promise-modal.min.js: dist/react-promise-modal.js
 	npm run minify
 
