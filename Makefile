@@ -1,5 +1,8 @@
-dist/index.js: src/index.js node_modules
-	npm run build
+dist/react-promise-modal.min.js: dist/react-promise-modal.js
+	npm run minify
+
+dist/react-promise-modal.js: src/index.js node_modules
+	npm run dist
 
 node_modules: package.json
 	npm install

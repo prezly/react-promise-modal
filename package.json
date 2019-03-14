@@ -4,7 +4,8 @@
   "description": "The proper (and easy) way of doing modals in React. With Promises.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src/index.js > dist/index.js",
+    "dist": "babel src/index.js > dist/react-promise-modal.js",
+    "minify": "uglifyjs --mangle=reserved dist/react-promise-modal.js > dist/react-promise-modal.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,7 +32,8 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "uglify-js": "^3.4.9"
   },
   "peerDependencies": {
     "react": "*",
