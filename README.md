@@ -22,7 +22,7 @@ The function returns a *Promise* that is resolved with an `undefined` if the mod
 or `true` (or any value you provide) when it's submitted.
 
 ```jsx
-import reactModal from '@prezly/react-promise-modal`;
+import reactModal from '@prezly/react-promise-modal';
 
 const result = await reactModal(({ show, onSubmit, onDismiss }) => (
     // Use any modal implementation
@@ -82,7 +82,7 @@ await reactModal(({ show, onDismiss }) => (
         </Modal.Header>
       
         <Modal.Body>
-            An error occured. Can't fix it.
+            An error occured. Can&lsquo;t fix it.
         </Modal.Body>
     
         <Modal.Footer>
