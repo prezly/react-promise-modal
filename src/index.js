@@ -12,12 +12,12 @@ export default async function reactModal(renderModal, options = {}) {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
-    function displayModal(props) {
-        render(renderModal({ ...props, show: true }), container);
+    function displayModal({ onSubmit, onDismiss }) {
+        render(renderModal({ onSubmit, onDismiss, show: true }), container);
     }
 
-    function hideModal(props, callback) {
-        render(renderModal({ ...props, show: false }), container, callback);
+    function hideModal({ onSubmit, onDismiss }, callback) {
+        render(renderModal({ onSubmit, onDismiss, show: false }), container, callback);
     }
 
     function destroyModal() {
@@ -26,17 +26,17 @@ export default async function reactModal(renderModal, options = {}) {
     }
 
     const confirmation = new Promise((resolve) => {
-        const onConfirm = (value = true) => resolve(value);
-        const onCancel = () => resolve(undefined);
-        displayModal({ onConfirm, onCancel });
+        const onSubmit = (value = true) => resolve(value);
+        const onDismiss = () => resolve(undefined);
+        displayModal({ onSubmit, onDismiss });
     });
 
     try {
         return await confirmation;
     } finally {
-        const onConfirm = noop;
-        const onCancel = noop;
-        hideModal({ onConfirm, onCancel }, () => {
+        const onSubmit = noop;
+        const onDismiss = noop;
+        hideModal({ onSubmit, onDismiss }, () => {
             setTimeout(destroyModal, destructionDelay);
         });
     }

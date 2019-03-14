@@ -1,16 +1,16 @@
 import { ReactNode } from 'react';
 
-type OnCancelCallback = () => void;
+type OnDismissCallback = () => void;
 
-type OnConfirmCallback<R> = {
+type OnSubmitCallback<R> = {
     (): void;
     (value: R): void;
 }
 
 interface RenderFunctionProps<R> {
     show: boolean;
-    onConfirm: OnConfirmCallback<R>;
-    onCancel: OnCancelCallback;
+    onSubmit: OnSubmitCallback<R>;
+    onDismiss: OnDismissCallback;
 }
 
 type RenderFunction<R> = (props: RenderFunctionProps<R>) => ReactNode;
