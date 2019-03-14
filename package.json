@@ -1,8 +1,8 @@
 {
   "name": "@prezly/react-promise-modal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The proper (and easy) way of doing modals in React. With Promises.",
-  "main": "dist/index.js",
+  "main": "dist/react-promise-modal.js",
   "scripts": {
     "dist": "babel src/index.js > dist/react-promise-modal.js",
     "minify": "uglifyjs --mangle=reserved dist/react-promise-modal.js > dist/react-promise-modal.min.js",
