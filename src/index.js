@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
 
 const noop = () => {};
 
-export default async function reactModal(renderModal, options = {}) {
+export default function reactModal(renderModal, options = {}) {
     const { destructionDelay } = { ...DEFAULT_OPTIONS, ...options };
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -31,13 +31,11 @@ export default async function reactModal(renderModal, options = {}) {
         displayModal({ onSubmit, onDismiss });
     });
 
-    try {
-        return await confirmation;
-    } finally {
+    return confirmation.finally(() => {
         const onSubmit = noop;
         const onDismiss = noop;
         hideModal({ onSubmit, onDismiss }, () => {
             setTimeout(destroyModal, destructionDelay);
         });
-    }
+    });
 }
