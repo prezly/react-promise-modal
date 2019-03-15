@@ -36,7 +36,7 @@ const result = await reactModal(({ show, onSubmit, onDismiss }) => (
 if (result === undefined) {    
     console.log('The modal was dismissed or cancelled');
 } else {
-   console.log(result); // outputs "OK Clicked"
+    console.log(result); // outputs "OK Clicked"
 }
 
 ```
