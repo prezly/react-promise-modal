@@ -145,3 +145,7 @@ const filename = await reactModal(({ show, onSubmit, onDismiss }) => (
     <FilenamePromptModal show={show} onSubmit={onSubmit} onDismiss={onDismiss} />
 ));
 ```
+
+------------------
+
+Brought to you with :metal: by [Prezly](https://www.prezly.com/).
