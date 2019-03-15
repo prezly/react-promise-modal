@@ -30,7 +30,7 @@ const result = await reactModal(({ show, onSubmit, onDismiss }) => (
        OK?
        <button onClick={onDismiss}>Cancel</Button>
        <button onClick={() => onSubmit('OK Clicked')}>OK</Button>
-    </Modal.Dialog>
+    </Modal>
 ));
 
 if (result === undefined) {    
