@@ -148,4 +148,4 @@ const filename = await reactModal(({ show, onSubmit, onDismiss }) => (
 
 ------------------
 
-Brought to you with :metal: by [Prezly](https://www.prezly.com/).
+Brought to you with :metal: by [Prezly](https://www.prezly.com/?utm_source=github&utm_campaign=react-promise-modal).
