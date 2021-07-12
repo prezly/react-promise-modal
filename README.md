@@ -1,6 +1,6 @@
 # React Promise Modal
 
-The proper (and easy) way of using modals in React. With Promises.
+The easies way of using modals in React. With Promises.
 
 ## Usage
 
