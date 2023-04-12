@@ -1,4 +1,5 @@
 import {createRoot} from 'react-dom';
+import {useEffect} from "react";
 
 const DEFAULT_DESTRUCTION_DELAY = 300;
 const DEFAULT_OPTIONS = {
@@ -19,7 +20,13 @@ export default function reactModal(renderModal, options = {}) {
     }
 
     function hideModal({ onSubmit, onDismiss }, callback) {
-        root.render(renderModal({ onSubmit, onDismiss, show: false }), callback);
+        root.render(function() {
+            useEffect(() => {
+                callback()
+            })
+
+            return renderModal({ onSubmit, onDismiss, show: false })
+        });
     }
 
     function destroyModal() {
