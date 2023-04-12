@@ -1,4 +1,4 @@
-import { render, unmountComponentAtNode } from 'react-dom';
+import {createRoot} from 'react-dom';
 
 const DEFAULT_DESTRUCTION_DELAY = 300;
 const DEFAULT_OPTIONS = {
@@ -12,16 +12,18 @@ export default function reactModal(renderModal, options = {}) {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    const root = createRoot(container)
+
     function displayModal({ onSubmit, onDismiss }) {
-        render(renderModal({ onSubmit, onDismiss, show: true }), container);
+        root.render(renderModal({ onSubmit, onDismiss, show: true }));
     }
 
     function hideModal({ onSubmit, onDismiss }, callback) {
-        render(renderModal({ onSubmit, onDismiss, show: false }), container, callback);
+        root.render(renderModal({ onSubmit, onDismiss, show: false }), callback);
     }
 
     function destroyModal() {
-        unmountComponentAtNode(container);
+        root.unmount();
         document.body.removeChild(container);
     }
 
