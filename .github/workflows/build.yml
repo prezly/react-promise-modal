@@ -23,8 +23,10 @@ jobs:
       - name: Set React ${{ matrix.react-version }}
         uses: prezly/pnpm-overrides-action@v1
         with:
-          'react':     "${{ matrix.react-version }}"
-          'react-dom': "${{ matrix.react-version }}"
+          '@types/react':     "${{ matrix.react-version }}"
+          '@types/react-dom': "${{ matrix.react-version }}"
+          'react':            "${{ matrix.react-version }}"
+          'react-dom':        "${{ matrix.react-version }}"
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
