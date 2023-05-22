@@ -2,11 +2,18 @@
   "name": "@prezly/react-promise-modal",
   "version": "0.2.0",
   "description": "The proper (and easy) way of doing modals in React. With Promises.",
-  "main": "dist/react-promise-modal.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["README.md", "dist"],
   "scripts": {
-    "dist": "babel src/index.js > dist/react-promise-modal.js",
-    "minify": "uglifyjs --mangle=reserved dist/react-promise-modal.js > dist/react-promise-modal.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf package-lock.json pnpm-lock.yaml yarn.lock node_modules/ dist/",
+    "build": "npm run build:js && npm run build:types",
+    "build:js": "babel src/index.ts -o dist/index.js",
+    "build:types": "tsc --project .",
+    "test": "npm run test:ts && npm run test:types && npm run test:build",
+    "test:types": "tsc --project ./tsconfig.test.json",
+    "test:ts": "tsc --noEmit --lib es2018,dom ./test/typescript.test.ts",
+    "test:build": "node test/commonjs.test.js"
   },
   "repository": {
     "type": "git",
@@ -26,18 +33,23 @@
     "url": "https://github.com/prezly/react-promise-modal/issues"
   },
   "homepage": "https://github.com/prezly/react-promise-modal#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
+    "@babel/preset-typescript": "^7.21.5",
+    "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "uglify-js": "^3.4.9"
+    "rimraf": "^5.0.1",
+    "typescript": "4.4"
   },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
-  },
-  "types": "./src/index.d.ts"
+  }
 }
