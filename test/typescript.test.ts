@@ -1,5 +1,5 @@
 import reactModal from '../src';
-import { createElement, Fragment } from 'react';
+import { createElement } from 'react';
 
 (async () => {
   const result: true | undefined = await reactModal(({ onSubmit, onDismiss, show }) => {
@@ -9,7 +9,7 @@ import { createElement, Fragment } from 'react';
       onDismiss();
     }
 
-    return createElement(Fragment, {}, [show]);
+    return createElement('div', {}, [show]);
   });
 })();
 
@@ -21,6 +21,6 @@ import { createElement, Fragment } from 'react';
       onDismiss();
     }
 
-    return createElement(Fragment, {}, [show]);
+    return createElement('div', {}, [show]);
   });
 })();
