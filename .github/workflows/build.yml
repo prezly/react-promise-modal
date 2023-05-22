@@ -1,0 +1,33 @@
+name: Build
+on: push
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:  [16]
+        react-version: [16, 17, 18]
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup Environment
+        uses: prezly/setup-github-actions@v1
+        with:
+          node: ${{ matrix.node-version }}
+          pnpm: "8.4.0"
+
+      - name: Set React ${{ matrix.react-version }}
+        uses: prezly/pnpm-overrides-action@v1
+        with:
+          '@types/react':     "${{ matrix.react-version }}"
+          '@types/react-dom': "${{ matrix.react-version }}"
+          'react':            "${{ matrix.react-version }}"
+          'react-dom':        "${{ matrix.react-version }}"
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpm test

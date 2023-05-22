@@ -1,6 +1,11 @@
 # Compiled dist files
 dist
 
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
 # Logs
 logs
 *.log
