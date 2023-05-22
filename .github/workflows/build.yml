@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Install Dependencies
-        run:  npm install
-
       - name: Setup Environment
         uses: prezly/setup-github-actions@v1
         with:
