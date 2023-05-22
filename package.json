@@ -4,7 +4,10 @@
   "description": "The proper (and easy) way of doing modals in React. With Promises.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["README.md", "dist"],
+  "files": [
+    "README.md",
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf package-lock.json pnpm-lock.yaml yarn.lock node_modules/ dist/",
     "build": "npm run build:js && npm run build:types",
@@ -13,7 +16,8 @@
     "test": "npm run test:ts && npm run test:types && npm run test:build",
     "test:types": "tsc --project ./tsconfig.test.json",
     "test:ts": "tsc --noEmit --lib es2018,dom ./test/typescript.test.ts",
-    "test:build": "node test/commonjs.test.js"
+    "test:build": "node test/commonjs.test.js",
+    "publish": "np"
   },
   "repository": {
     "type": "git",
@@ -43,6 +47,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-typescript": "^7.21.5",
     "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
+    "np": "^7.7.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "rimraf": "^5.0.1",
