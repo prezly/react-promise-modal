@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         node-version:  [16]
-        react-version: [16, 17, 18]
+        react-version: [18]
 
     steps:
       - uses: actions/checkout@master

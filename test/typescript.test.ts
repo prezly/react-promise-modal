@@ -1,4 +1,4 @@
-import reactModal from '../src';
+import reactModal from '../dist';
 import { createElement } from 'react';
 
 (async () => {

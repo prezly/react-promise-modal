@@ -1,4 +1,4 @@
-import { render, unmountComponentAtNode } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { ReactElement } from 'react';
 
 type Callback<R> = void extends R ? () => void : (value: R) => void;
@@ -17,7 +17,7 @@ interface Options {
     destructionDelay?: number;
 }
 
-const DEFAULT_DESTRUCTION_DELAY = 300;
+const DEFAULT_DESTRUCTION_DELAY = 1000;
 
 const noop = () => {};
 
@@ -39,16 +39,18 @@ export default function reactModal(
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    const root = createRoot(container);
+
     function displayModal({ onSubmit, onDismiss }: ModalCallbacks<unknown>) {
-        render(renderModal({ onSubmit, onDismiss, show: true }), container);
+        root.render(renderModal({ onSubmit, onDismiss, show: true }));
     }
 
-    function hideModal({ onSubmit, onDismiss }: ModalCallbacks<unknown>, callback: () => void) {
-        render(renderModal({ onSubmit, onDismiss, show: false }), container, callback);
+    function hideModal({ onSubmit, onDismiss }: ModalCallbacks<unknown>) {
+        root.render(renderModal({ onSubmit, onDismiss, show: false }));
     }
 
     function destroyModal() {
-        unmountComponentAtNode(container);
+        root.unmount();
         document.body.removeChild(container);
     }
 
@@ -67,8 +69,7 @@ export default function reactModal(
     });
 
     return confirmation.finally(() => {
-        hideModal({ onSubmit: noop, onDismiss: noop }, () => {
-            setTimeout(destroyModal, destructionDelay);
-        });
+        hideModal({ onSubmit: noop, onDismiss: noop });
+        setTimeout(destroyModal, destructionDelay);
     });
 }
