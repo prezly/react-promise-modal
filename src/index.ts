@@ -11,7 +11,7 @@ interface RenderFunctionProps<R> {
 
 type ModalCallbacks<T> = Pick<RenderFunctionProps<T>, 'onSubmit' | 'onDismiss'>;
 
-type RenderFunction<T> = (props: RenderFunctionProps<T>) => ReactElement;
+type RenderFunction<T> = (props: RenderFunctionProps<T>) => ReactElement<any>;
 
 interface Options {
     destructionDelay?: number;
