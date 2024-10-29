@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version:  [16]
+        node-version:  [20]
         react-version: [18]
 
     steps:
@@ -15,7 +15,7 @@ jobs:
         uses: prezly/setup-github-actions@v1
         with:
           node: ${{ matrix.node-version }}
-          pnpm: "8.4.0"
+          pnpm: "9.4.0"
 
       - name: Set React ${{ matrix.react-version }}
         uses: prezly/pnpm-overrides-action@v1
