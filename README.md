@@ -24,7 +24,7 @@ or `true` (or any value you provide) when it's submitted.
 ```jsx
 import reactModal from '@prezly/react-promise-modal';
 
-const result = await reactModal(({ show, onSubmit, onDismiss }) => (
+const result = await reactModal<string>(({ show, onSubmit, onDismiss }) => (
     // Use any modal implementation
     <Modal show={show} onHide={onDismiss}>
        OK?
@@ -96,52 +96,37 @@ await reactModal(({ show, onDismiss }) => (
 
 ```jsx
 import reactModal from '@prezly/react-promise-modal';
-import { Modal } from 'react-bootstrap'; 
+import { Modal } from 'react-bootstrap';
 
-class FilenamePromptModal extends Component {
-    static propTypes = {
-        show: PropTypes.bool.isRequired,
-        onSubmit: PropTypes.func.isRequired,
-        onDismiss: PropTypes.func.isRequired,
-    };
-    
-    state = {
-        filename: 'Untitled.txt',
-    };
-    
-    handleChange = (event) => {
-        this.setState({ filename: event.target.value });
-    };
-    
-    handleSubmit = () => {
-        this.props.onSubmit(this.state.filename);    
-    };
-    
-    render() {
-        const { show, onDismiss } = this.props;
-        
-        return (
-            <Modal.Dialog show={show} onHide={onDismiss}>
-                <form onSubmit={this.handleSubmit}>
-                    <Modal.Body>
-                        <p>Please enter filename:</p>
-                        <input autoFocus value={this.state.filename} onChange={this.handleChange} />
-                    </Modal.Body>
-                  
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={onDismiss}>Cancel</Button>
-                        <Button variant="primary" type="submit">Confirm</Button>
-                    </Modal.Footer>
-                </form>
-            </Modal.Dialog>        
-        );
-    }
+type Props = {
+   show: boolean;
+   onSubmit: (filename: string) => void;
+   onDismiss: () => void;
 }
 
-const filename = await reactModal(({ show, onSubmit, onDismiss }) => (
+function FilenamePromptModal({ show, onSubmit, onDismiss }: Props) {
+   const [filename, setFilename] = useState('Untitled.txt');
+        
+   return (
+      <Modal.Dialog show={show} onHide={onDismiss}>
+          <form onSubmit={() => onSubmit(filename)}>
+              <Modal.Body>
+                  <p>Please enter filename:</p>
+                  <input autoFocus value={filename} onChange={(event) => setFilename(event.target.value)} />
+              </Modal.Body>
+            
+              <Modal.Footer>
+                  <Button variant="secondary" onClick={onDismiss}>Cancel</Button>
+                  <Button variant="primary" type="submit">Confirm</Button>
+              </Modal.Footer>
+          </form>
+      </Modal.Dialog>        
+   );
+}
+
+const filename = await reactModal<string>(({ show, onSubmit, onDismiss }) => (
     // Use any modal window implementation you need.
     // We're using React Bootstrap Modal for demo purposes here
-     
     <FilenamePromptModal show={show} onSubmit={onSubmit} onDismiss={onDismiss} />
 ));
 ```
