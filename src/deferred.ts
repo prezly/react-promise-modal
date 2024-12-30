@@ -1,4 +1,4 @@
-import { noop} from './lib';
+import { noop } from "./lib";
 
 /**
  * This kinda follows the Jquery.Deferred type idea.
@@ -12,7 +12,7 @@ export type Deferred<T> = {
     resolve: (value: T) => void;
     reject: (reason: unknown) => void;
     isSettled(): boolean;
-}
+};
 
 export function createDeferred<T>(): Deferred<T> {
     let isSettled = false;
@@ -39,4 +39,3 @@ export function createDeferred<T>(): Deferred<T> {
         },
     };
 }
-

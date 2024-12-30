@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { noop } from './lib';
-import { useIsMounted } from './useIsMounted';
-import { useLatest } from './useLatest';
+import { noop } from "./lib";
+import { useIsMounted } from "./useIsMounted";
+import { useLatest } from "./useLatest";
 
 export type Milliseconds = number;
 
@@ -11,34 +11,29 @@ type Props = {
     onClosed?: () => void;
     transitionDuration: Milliseconds;
     render: (props: RenderProps) => React.ReactElement | null;
-}
+};
 
 type RenderProps = {
     isOpen: boolean;
     stage: `${Stage.OPEN | Stage.OPENING | Stage.CLOSING}`; // Note: not rendering "closed" stage
     onClose: () => void;
-}
+};
 
 export enum Stage {
-    OPEN = 'open',
-    OPENING = 'opening',
-    CLOSING = 'closing',
-    CLOSED = 'closed',
+    OPEN = "open",
+    OPENING = "opening",
+    CLOSING = "closing",
+    CLOSED = "closed",
 }
 
-export function ModalTransitions({
-     isOpen: shouldOpen,
-     onClosed,
-     transitionDuration,
-     render
- }: Props) {
+export function ModalTransitions({ isOpen: shouldOpen, onClosed, transitionDuration, render }: Props) {
     const isMounted = useIsMounted();
     const [stage, setStage] = React.useState<Stage>(Stage.CLOSED);
     const refs = useLatest({
         stage,
         onClosed,
         transitionDuration,
-    })
+    });
 
     const onOpen = React.useCallback(() => {
         if (!isMounted()) {
@@ -95,7 +90,6 @@ export function ModalTransitions({
         } else {
             return onClose();
         }
-
     }, [open]);
 
     if (stage === Stage.CLOSED) {

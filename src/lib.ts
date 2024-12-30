@@ -1,4 +1,4 @@
-import type * as React from 'react';
+import type * as React from "react";
 
 export function noop() {
     // Nothing
@@ -14,11 +14,11 @@ export function isEvent(value: unknown): value is Event {
 
 export function isSyntheticEvent(value: unknown | Partial<React.SyntheticEvent>): value is React.SyntheticEvent {
     return (
-        typeof value === 'object' &&
+        typeof value === "object" &&
         value !== null &&
-        'nativeEvent' in value &&
-        'persist' in value &&
-        'stopPropagation' in value &&
-        'preventDefault' in value
+        "nativeEvent" in value &&
+        "persist" in value &&
+        "stopPropagation" in value &&
+        "preventDefault" in value
     );
 }

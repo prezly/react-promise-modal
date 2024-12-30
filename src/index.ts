@@ -1,1 +1,1 @@
-export { usePromiseModal } from './usePromiseModal';
+export { usePromiseModal } from "./usePromiseModal";

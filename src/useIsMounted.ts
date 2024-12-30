@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 /**
  * @see https://streamich.github.io/react-use/?path=/story/lifecycle-usemountedstate--docs
@@ -14,7 +14,7 @@ export function useIsMounted(): () => boolean {
 
         return () => {
             isMounted.current = false;
-        }
+        };
     }, []);
 
     return React.useCallback(() => isMounted.current, []);

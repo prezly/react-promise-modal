@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { createDeferred, Deferred } from './deferred';
-import { generateId, isEvent, isSyntheticEvent } from './lib';
-import { ModalTransitions, type Milliseconds } from './ModalTransitions';
-import { useIsMounted } from './useIsMounted';
-import { useLatest } from './useLatest';
+import { createDeferred, Deferred } from "./deferred";
+import { generateId, isEvent, isSyntheticEvent } from "./lib";
+import { ModalTransitions, type Milliseconds } from "./ModalTransitions";
+import { useIsMounted } from "./useIsMounted";
+import { useLatest } from "./useLatest";
 
-const DEFAULT_CONCURRENCY_MODE: ConcurrencyMode = 'replace';
+const DEFAULT_CONCURRENCY_MODE: ConcurrencyMode = "replace";
 const DEFAULT_TRANSITION_DURATION: Milliseconds = 300;
 
 interface Options {
@@ -14,12 +14,12 @@ interface Options {
     transitionDuration?: Milliseconds;
 }
 
-type ConcurrencyMode = 'stack' | 'replace' | 'ignore';
+type ConcurrencyMode = "stack" | "replace" | "ignore";
 type RenderFunction<P> = (props: P) => React.ReactElement | null | undefined;
 
 interface RenderProps<T> {
     show: boolean;
-    stage: 'open' | 'opening' | 'closing';
+    stage: "open" | "opening" | "closing";
     onDismiss: () => void;
     onSubmit: (value: Exclude<T, undefined>) => void;
 }
@@ -50,10 +50,7 @@ export function usePromiseModal<T, Args>(
 
 export function usePromiseModal<T, Args extends object>(
     render: RenderFunction<RenderProps<T> & Omit<Args, keyof RenderProps<T>>>,
-    {
-        concurrencyMode = DEFAULT_CONCURRENCY_MODE,
-        transitionDuration = DEFAULT_TRANSITION_DURATION,
-    }: Options = {},
+    { concurrencyMode = DEFAULT_CONCURRENCY_MODE, transitionDuration = DEFAULT_TRANSITION_DURATION }: Options = {},
 ) {
     const isMounted = useIsMounted();
     const [invoked, setInvoked] = React.useState<Invocation<T, Args>[]>([]);
@@ -72,9 +69,7 @@ export function usePromiseModal<T, Args extends object>(
                         onClosed={() => {
                             if (isMounted()) {
                                 // Remove the invocation when the modal is closed
-                                setInvoked(
-                                    (prev) => prev.filter((x) => x.id !== invocation.id),
-                                );
+                                setInvoked((prev) => prev.filter((x) => x.id !== invocation.id));
                             }
                         }}
                         transitionDuration={transitionDuration}
@@ -108,14 +103,12 @@ export function usePromiseModal<T, Args extends object>(
                 //       which is a super common scenario. Modal `invoke()` functions are passed to onClick handlers all the time.
                 //       Also, an event should never be used as a props object to spread anyway.
                 //       @see https://github.com/prezly/prezly/pull/12020#discussion_r1101325932
-                isEvent(incomingArgs) || isSyntheticEvent(incomingArgs)
-                    ? ({} as Args)
-                    : incomingArgs;
+                isEvent(incomingArgs) || isSyntheticEvent(incomingArgs) ? ({} as Args) : incomingArgs;
 
             const invocation = { id, args, deferred };
 
             switch (concurrencyMode) {
-                case 'ignore':
+                case "ignore":
                     setInvoked((prev) => {
                         if (prev.length > 0) {
                             // auto-dismiss the current call
@@ -125,10 +118,10 @@ export function usePromiseModal<T, Args extends object>(
                         return [invocation];
                     });
                     break;
-                case 'stack':
+                case "stack":
                     setInvoked((prev) => [...prev, invocation]);
                     break;
-                case 'replace':
+                case "replace":
                 default:
                     setInvoked((prev) => {
                         // auto-dismiss all previous calls
