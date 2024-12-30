@@ -1,5 +1,5 @@
-const reactModal = require("../dist/index.js");
+const { usePromiseModal } = require("../dist/index.js");
 
-if (typeof reactModal !== "function") {
-  throw Error("Broken default export");
+if (typeof usePromiseModal !== "function") {
+    throw Error("Broken default export");
 }

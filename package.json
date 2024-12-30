@@ -15,7 +15,7 @@
     "build:types": "tsc --project .",
     "test": "npm run test:ts && npm run test:types && npm run test:build",
     "test:types": "tsc --project ./tsconfig.test.json",
-    "test:ts": "tsc --noEmit --lib es2018,dom ./test/typescript.test.ts",
+    "test:ts": "tsc --noEmit --lib es2018,dom --jsx react --skipLibCheck ./test/typescript.test.tsx",
     "test:build": "node test/commonjs.test.js",
     "publish": "np"
   },
@@ -45,6 +45,7 @@
     "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
     "np": "^10.1.0",
