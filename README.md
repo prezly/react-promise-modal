@@ -54,6 +54,10 @@ function MyApp() {
 
 ### Alert
 
+Alert is basically the same as confirmation, except there is no difference whether
+it is submitted or dismissed -- the modal has single action anyway. 
+So we only need `onDismiss`:
+
 ```jsx
 import { usePromiseModal } from '@prezly/react-promise-modal';
 
@@ -79,6 +83,9 @@ function MyApp() {
 ```
 
 ### Prompt User Input
+
+For data prompts all you need is to resolve the promise by submitting the value to `onSubmit`:
+either a scalar, or more complex shapes wrapped into an object:
 
 ```tsx
 import { usePromiseModal } from '@prezly/react-promise-modal';
