@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf package-lock.json pnpm-lock.yaml yarn.lock node_modules/ dist/",
     "build": "npm run build:js && npm run build:types",
-    "build:js": "babel src/index.ts -o dist/index.js",
+    "build:js": "babel src/* -x .ts,.tsx -d dist/",
     "build:types": "tsc --project .",
     "test": "npm run test:ts && npm run test:types && npm run test:build",
     "test:types": "tsc --project ./tsconfig.test.json",
