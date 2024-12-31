@@ -25,7 +25,7 @@ async function handleClick() {
 }
 ```
 
-**Demo: https://codesandbox.io/p/sandbox/romantic-lovelace-4pmm3k**
+**Demo: https://codesandbox.io/p/sandbox/zen-jennings-4pmm3k**
 
 ## API
 
