@@ -29,7 +29,7 @@ async function handleClick() {
 
 ## API
 
-**The `usePromiseModal()` hook` returns the following values**:
+**The `usePromiseModal()` hook returns the following values**:
 
 ```tsx
 const { invoke, modal, isDisplayed } = usePromiseModal(/* ... */);
