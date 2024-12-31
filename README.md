@@ -4,7 +4,36 @@ The easiest way of using modals in React. With Promises.
 
 ## Usage
 
-`usePromiseModal()` is a Reac thook that accepts a callback that renders a modal from these three arguments:
+`usePromiseModal()` is a React hook that allows you to define a modal 
+by providing a custom rendering function. 
+
+After defining your modal you can invoke it imperatively and await the returned promise
+to resolve, to get the modal resolution result.
+
+**`usePromiseModal()` returns the following values**:
+
+```tsx
+const { invoke, modal, isDisplayed } = usePromiseModal(/* ... */);
+```
+
+- `invoke` — imperatively invoke the modal, optionally passing additional call-time arguments.
+  Returns a promise you can _await_ to get the modal resolution value, when it's available. 
+  Or _undefined_ if the modal has been dismissed or cancelled.
+
+- `modal` — the rendered modal markup (`ReactElement | null`). You should always render this
+  value into your component subtree.
+
+- `isDisplayed` — a boolean flag indicating if there is currently a pending modal
+  for this definition.
+
+**The modal render function receives these properties**:
+
+```tsx
+usePromiseModal(({ show, onDismiss, onSubmit }) => (
+    <Modal show={show} onDismiss={onDismiss} onSubmit={onSubmit} />
+));
+```
+
 
 - `show` — boolean to tell if the window is visible or not. 
    Used for in/out transitions. 
@@ -140,7 +169,8 @@ function FilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
 ## Additional Invoke-time Arguments
 
 In addition to the three standard properties your modal render callback will always receive when rendered,
-you can pass your one call-time properties. Declare them with the second generic type parameter of `usePromiseModal()`:
+you can pass extra call-time properties. Declare them with the second generic type parameter of `usePromiseModal()`,
+and then pass to the `invoke()` method:
 
 ```tsx
 import { usePromiseModal } from "@prezly/react-promise-modal";
@@ -161,5 +191,7 @@ async function handleFlakyOperation() {
 ```
 
 ------------------
+
+# Credits
 
 Brought to you with :metal: by [Prezly](https://www.prezly.com/?utm_source=github&utm_campaign=react-promise-modal).
