@@ -29,7 +29,7 @@ async function handleClick() {
 
 ## API
 
-**The `usePromiseModal()` hook` returns the following values**:
+**The `usePromiseModal()` hook returns the following values**:
 
 ```tsx
 const { invoke, modal, isDisplayed } = usePromiseModal(/* ... */);
@@ -85,7 +85,7 @@ function MyApp() {
     
     async function handleDeleteAccount() {
         if (await confirmation.invoke()) {
-            console.log('Conirmed');
+            console.log('Confirmed');
         } else {
             console.log('Cancelled');
         }
@@ -200,7 +200,7 @@ const failureFeedback = usePromiseModal<undefined, { status: Status, failures: O
     ),
 );
 
-// Invocation of the modal now requrires these additional properties:
+// Invocation of the modal now requires these additional properties:
 async function handleFlakyOperation() {
     const { status, failures } = await api.flakyOperation();
     if (status !== 'success') {
