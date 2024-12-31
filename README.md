@@ -1,16 +1,35 @@
 # React Promise Modal
 
-The easiest way of using modals in React. With Promises.
-
-## Usage
-
-`usePromiseModal()` is a React hook that allows you to define a modal 
-by providing a custom rendering function. 
+`usePromiseModal()` is a React hook that allows you to define a modal
+by providing a custom rendering function.
 
 After defining your modal you can invoke it imperatively and await the returned promise
 to resolve, to get the modal resolution result.
 
-**`usePromiseModal()` returns the following values**:
+## Usage
+
+1. Define your modal with `usePromiseModal()`
+2. Invoke it from your event handler using `invoke()`
+3. Wait for the modal to resolve with `await`
+
+```js
+// 1) Define your modal
+const confirmation = usePromiseModal((props) => <MyModal {...props} />);
+
+// 2) Call it in your event handler
+async function handleClick() {
+    // 3) Wait for the modal to resolve
+    if (await confirmation.invoke()) {
+        // TODO: Perform the operation.
+    }
+}
+```
+
+**Demo: https://codesandbox.io/p/sandbox/romantic-lovelace-4pmm3k**
+
+## API
+
+**The `usePromiseModal()` hook` returns the following values**:
 
 ```tsx
 const { invoke, modal, isDisplayed } = usePromiseModal(/* ... */);
@@ -30,7 +49,7 @@ const { invoke, modal, isDisplayed } = usePromiseModal(/* ... */);
 
 ```tsx
 usePromiseModal(({ show, onDismiss, onSubmit }) => (
-    <Modal show={show} onDismiss={onDismiss} onSubmit={onSubmit} />
+    <MyModal show={show} onDismiss={onDismiss} onSubmit={onSubmit} />
 ));
 ```
 
@@ -61,7 +80,7 @@ import { usePromiseModal } from '@prezly/react-promise-modal';
 function MyApp() {
     const confirmation = usePromiseModal(({ show, onSubmit, onDismiss }) => {
         // Use any modal implementation you want
-        <ConfirmationModal title="⚠️ Are you sure?" show={show} onConfirm={() => onSubmit(true)} onDismiss={onDismiss} />
+        <MyConfirmationModal title="⚠️ Are you sure?" show={show} onConfirm={() => onSubmit(true)} onDismiss={onDismiss} />
     });
     
     async function handleDeleteAccount() {
@@ -93,7 +112,7 @@ import { usePromiseModal } from '@prezly/react-promise-modal';
 function MyApp() {
     const alert = usePromiseModal(({ show, onDismiss }) => {
         // Use any modal implementation you want
-        <AlertModal title="✔ Account deleted!" show={show} onDismiss={onDismiss} />
+        <MyAlertModal title="✔ Account deleted!" show={show} onDismiss={onDismiss} />
     });
 
     async function handleDeleteAccount() {
@@ -121,7 +140,7 @@ import { usePromiseModal } from '@prezly/react-promise-modal';
 
 function MyApp() {
     const prompt = usePromiseModal<string, { title: string }>(
-        (props) => <FilenamePromptModal {...props} />,
+        (props) => <MyFilenamePromptModal {...props} />,
     );
 
     async function handleCreateFile() {
@@ -148,7 +167,7 @@ interface Props {
     onDismiss: () => void;
 }
 
-function FilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
+function MyFilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
     const [filename, setFilename] = useState("Untitled.txt");
 
     return (
