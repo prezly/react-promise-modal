@@ -1,6 +1,6 @@
 {
   "name": "@prezly/react-promise-modal",
-  "version": "0.3.1",
+  "version": "2.0.0-alpha.1",
   "description": "The proper (and easy) way of doing modals in React. With Promises.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,11 +11,11 @@
   "scripts": {
     "clean": "rimraf package-lock.json pnpm-lock.yaml yarn.lock node_modules/ dist/",
     "build": "npm run build:js && npm run build:types",
-    "build:js": "babel src/index.ts -o dist/index.js",
+    "build:js": "babel src/* -x .ts,.tsx -d dist/",
     "build:types": "tsc --project .",
     "test": "npm run test:ts && npm run test:types && npm run test:build",
     "test:types": "tsc --project ./tsconfig.test.json",
-    "test:ts": "tsc --noEmit --lib es2018,dom ./test/typescript.test.ts",
+    "test:ts": "tsc --noEmit --lib es2018,dom --jsx react --skipLibCheck ./test/typescript.test.tsx",
     "test:build": "node test/commonjs.test.js",
     "publish": "np"
   },
@@ -42,19 +42,21 @@
     "@types/react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.21.5",
-    "@babel/preset-typescript": "^7.21.5",
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
-    "np": "^7.7.0",
+    "np": "^10.1.0",
+    "prettier": "^3.4.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "rimraf": "^5.0.1",
-    "typescript": "4.5"
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2"
   },
   "peerDependencies": {
-    "react": ">=16",
-    "react-dom": ">=16"
+    "react": ">=18",
+    "react-dom": ">=18"
   }
 }

@@ -1,134 +1,163 @@
 # React Promise Modal
 
-The easies way of using modals in React. With Promises.
+The easiest way of using modals in React. With Promises.
 
 ## Usage
 
-`reactModal()` function accepts a render callback that renders a modal from given three arguments:
+`usePromiseModal()` is a Reac thook that accepts a callback that renders a modal from these three arguments:
 
 - `show` — boolean to tell if the window is visible or not. 
    Used for in/out transitions. 
    Primarily intended to be used as *react-bootstrap* Modal `show` property.
 
-- `onDismiss` — should be invoked when a modal is dismissed. 
-   Always resolves the promise to `undefined`.
-   
-- `onSubmit` — should be invoked when a modal is submitted/confirmed. 
-   Resolves to `true` if no arguments given.
-   But you can pass any value as argument to defined resolve value.
-   For obvious reason this value cannot be `undefined`.   
+- `onDismiss` — should be invoked when the modal is dismissed.
+  Always resolves the promise to `undefined`.
 
-The function returns a *Promise* that is resolved with an `undefined` if the modal was dismissed 
-or `true` (or any value you provide) when it's submitted.
+- `onSubmit` — should be invoked when the modal is submitted/confirmed. 
+   Resolves to the value provided as an argument to it.
+   The resolve value cannot be `undefined`, because it is already reserved for dismissal.
 
-```jsx
-import reactModal from '@prezly/react-promise-modal';
+The function returns a *Promise* that is resolved with the submitted value, 
+or `undefined` if it has been dismissed.
 
-const result = await reactModal<string>(({ show, onSubmit, onDismiss }) => (
-    // Use any modal implementation
-    <Modal show={show} onHide={onDismiss}>
-       OK?
-       <button onClick={onDismiss}>Cancel</Button>
-       <button onClick={() => onSubmit('OK Clicked')}>OK</Button>
-    </Modal>
-));
-
-if (result === undefined) {    
-    console.log('The modal was dismissed or cancelled');
-} else {
-    console.log(result); // outputs "OK Clicked"
-}
-
-```
+## Examples
 
 ### Confirmation
 
-You can easily implement a confirmation modal using `reactModal()`:
+You can easily implement a confirmation modal using `usePromiseModal()`:
 
 ```jsx
-import reactModal from '@prezly/react-promise-modal';
-import { Modal } from 'react-bootstrap'; 
+import { usePromiseModal } from '@prezly/react-promise-modal';
 
-const isConfirmed = await reactModal(({ show, onSubmit, onDismiss }) => (
-    // Use any modal window implementation you need.
-    // We're using React Bootstrap Modal for demo purposes here
-     
-    <Modal.Dialog show={show} onHide={onDismiss}>
-      <Modal.Body>
-        Confirm you really want to star this repository.
-      </Modal.Body>
+function MyApp() {
+    const confirmation = usePromiseModal(({ show, onSubmit, onDismiss }) => {
+        // Use any modal implementation you want
+        <ConfirmationModal title="⚠️ Are you sure?" show={show} onConfirm={() => onSubmit(true)} onDismiss={onDismiss} />
+    });
     
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onDismiss}>Cancel</Button>
-        <Button variant="primary" onClick={onSubmit}>Confirm</Button>
-      </Modal.Footer>
-    </Modal.Dialog>
-));
+    async function handleDeleteAccount() {
+        if (await confirmation.invoke()) {
+            console.log('Conirmed');
+        } else {
+            console.log('Cancelled');
+        }
+    }
+    
+    return (
+        <div>
+           <button onClick={handleDeleteAccount}>Delete account</button>
+           {confirmation.modal}
+        </div>
+    )
+}
 ```
 
 ### Alert
 
-```jsx
-import reactModal from '@prezly/react-promise-modal';
-import { Modal } from 'react-bootstrap'; 
+Alert is basically the same as confirmation, except there is no difference whether
+it is submitted or dismissed -- the modal has single action anyway. 
+So we only need `onDismiss`:
 
-await reactModal(({ show, onDismiss }) => (
-    // Use any modal window implementation you need.
-    // We're using React Bootstrap Modal for demo purposes here
-     
-    <Modal.Dialog show={show} onHide={onDismiss}>
-        <Modal.Header>
-            Error
-        </Modal.Header>
-      
-        <Modal.Body>
-            An error occured. Can&lsquo;t fix it.
-        </Modal.Body>
-    
-        <Modal.Footer>
-           <Button variant="primary" onClick={onDismiss}>OK</Button>
-        </Modal.Footer>
-    </Modal.Dialog>
-));
+```jsx
+import { usePromiseModal } from '@prezly/react-promise-modal';
+
+function MyApp() {
+    const alert = usePromiseModal(({ show, onDismiss }) => {
+        // Use any modal implementation you want
+        <AlertModal title="✔ Account deleted!" show={show} onDismiss={onDismiss} />
+    });
+
+    async function handleDeleteAccount() {
+        await api.deleteAccount();
+        await alert.invoke();
+    }
+
+    return (
+        <div>
+            <button onClick={handleDeleteAccount}>Delete account</button>
+            {alert.modal}
+        </div>
+    )
+}
+
 ```
 
-### Prompt user input
+### Prompt User Input
 
-```jsx
-import reactModal from '@prezly/react-promise-modal';
-import { Modal } from 'react-bootstrap';
+For data prompts all you need is to resolve the promise by submitting the value to `onSubmit`:
+either a scalar, or more complex shapes wrapped into an object:
 
-type Props = {
-   show: boolean;
-   onSubmit: (filename: string) => void;
-   onDismiss: () => void;
+```tsx
+import { usePromiseModal } from '@prezly/react-promise-modal';
+
+function MyApp() {
+    const prompt = usePromiseModal<string, { title: string }>(
+        (props) => <FilenamePromptModal {...props} />,
+    );
+
+    async function handleCreateFile() {
+        const filename = await prompt.invoke({ title: 'Please enter filename:' });
+        if (!filename) {
+            console.error('Filename is required');
+            return;
+        }
+        await api.createFile(filename);
+    }
+
+    return (
+        <div>
+            <button onClick={handleCreateFile}>Create new file</button>
+            {prompt.modal}
+        </div>
+    )
 }
 
-function FilenamePromptModal({ show, onSubmit, onDismiss }: Props) {
-   const [filename, setFilename] = useState('Untitled.txt');
-        
-   return (
-      <Modal.Dialog show={show} onHide={onDismiss}>
-          <form onSubmit={() => onSubmit(filename)}>
-              <Modal.Body>
-                  <p>Please enter filename:</p>
-                  <input autoFocus value={filename} onChange={(event) => setFilename(event.target.value)} />
-              </Modal.Body>
-            
-              <Modal.Footer>
-                  <Button variant="secondary" onClick={onDismiss}>Cancel</Button>
-                  <Button variant="primary" type="submit">Confirm</Button>
-              </Modal.Footer>
-          </form>
-      </Modal.Dialog>        
-   );
+interface Props {
+    title: string;
+    show: boolean;
+    onSubmit: (filename: string) => void;
+    onDismiss: () => void;
 }
 
-const filename = await reactModal<string>(({ show, onSubmit, onDismiss }) => (
-    // Use any modal window implementation you need.
-    // We're using React Bootstrap Modal for demo purposes here
-    <FilenamePromptModal show={show} onSubmit={onSubmit} onDismiss={onDismiss} />
-));
+function FilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
+    const [filename, setFilename] = useState("Untitled.txt");
+
+    return (
+        // Use any modal implementation you want
+        <Modal>
+            <form onSubmit={() => onSubmit(filename)}>
+                <p>{title}</p>
+                <input autoFocus value={filename} onChange={(event) => setFilename(event.target.value)} />
+
+                <button variant="secondary" onClick={onDismiss}>Cancel</button>
+                <button variant="primary" type="submit">Confirm</button>
+            </form>
+        </Modal>
+    );
+}
+```
+
+## Additional Invoke-time Arguments
+
+In addition to the three standard properties your modal render callback will always receive when rendered,
+you can pass your one call-time properties. Declare them with the second generic type parameter of `usePromiseModal()`:
+
+```tsx
+import { usePromiseModal } from "@prezly/react-promise-modal";
+
+const failureFeedback = usePromiseModal<undefined, { status: Status, failures: OperationFailure[] }>(
+    ({ status, failures, show, onSubmit, onDismiss }) => (
+        <FailureModal status={status} failures={failures} show={show} onSubmit={onSubmit} onDismiss={onDismiss} />
+    ),
+);
+
+// Invocation of the modal now requrires these additional properties:
+async function handleFlakyOperation() {
+    const { status, failures } = await api.flakyOperation();
+    if (status !== 'success') {
+        await failureFeedback.invoke({ status, failures }); // Note: here we pass additional parameters call-time
+    }
+}
 ```
 
 ------------------
