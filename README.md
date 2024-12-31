@@ -3,8 +3,8 @@
 `usePromiseModal()` is a React hook that allows you to define a modal
 by providing a custom rendering function.
 
-After defining your modal you can invoke it imperatively and await the returned promise
-to resolve, to get the modal resolution result.
+After defining your modal you can invoke it as a normal function,
+and await for the returned promise to get the modal resolution result.
 
 ## Usage
 
@@ -65,8 +65,6 @@ usePromiseModal(({ show, onDismiss, onSubmit }) => (
    Resolves to the value provided as an argument to it.
    The resolve value cannot be `undefined`, because it is already reserved for dismissal.
 
-The function returns a *Promise* that is resolved with the submitted value, 
-or `undefined` if it has been dismissed.
 
 ## Examples
 
@@ -172,7 +170,7 @@ function MyFilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
 
     return (
         // Use any modal implementation you want
-        <Modal>
+        <Modal show={show} onHide={onDismiss}>
             <form onSubmit={() => onSubmit(filename)}>
                 <p>{title}</p>
                 <input autoFocus value={filename} onChange={(event) => setFilename(event.target.value)} />
@@ -185,10 +183,10 @@ function MyFilenamePromptModal({ title, show, onSubmit, onDismiss }: Props) {
 }
 ```
 
-## Additional Invoke-time Arguments
+## Additional Invoke-Time Arguments
 
-In addition to the three standard properties your modal render callback will always receive when rendered,
-you can pass extra call-time properties. Declare them with the second generic type parameter of `usePromiseModal()`,
+In addition to the three standard properties your render callback will always receive when rendered,
+you can also pass extra call-time properties. Declare them with the second generic type parameter of `usePromiseModal()`,
 and then pass to the `invoke()` method:
 
 ```tsx
@@ -200,7 +198,7 @@ const failureFeedback = usePromiseModal<undefined, { status: Status, failures: O
     ),
 );
 
-// Invocation of the modal now requrires these additional properties:
+// Invocation of the modal now requires these additional properties:
 async function handleFlakyOperation() {
     const { status, failures } = await api.flakyOperation();
     if (status !== 'success') {
