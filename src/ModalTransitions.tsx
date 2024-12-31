@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { noop } from "./lib";
+import { delay, noop } from "./lib";
 import { useIsMounted } from "./useIsMounted";
 import { useLatest } from "./useLatest";
 
@@ -101,11 +101,5 @@ export function ModalTransitions({ isOpen: shouldOpen, onClosed, transitionDurat
         stage,
         isOpen: stage === Stage.OPEN || stage === Stage.OPENING,
         onClose,
-    });
-}
-
-function delay(ms: number): Promise<void> {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
     });
 }

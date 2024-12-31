@@ -8,6 +8,12 @@ export function generateId() {
     return `${new Date().getTime()}-${Math.random()}`;
 }
 
+export function delay(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 export function isEvent(value: unknown): value is Event {
     return value instanceof Event;
 }
