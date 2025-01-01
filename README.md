@@ -83,7 +83,7 @@ function MyApp() {
     
     async function handleDeleteAccount() {
         if (await confirmation.invoke()) {
-            console.log('Conirmed');
+            console.log('Confirmed');
         } else {
             console.log('Cancelled');
         }
