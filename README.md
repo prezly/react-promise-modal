@@ -1,5 +1,7 @@
 # React Promise Modal
 
+[![npm version](https://badgen.net/npm/v/@prezly/react-promise-modal)](https://www.npmjs.com/package/@prezly/react-promise-modal)
+
 `usePromiseModal()` is a React hook that allows you to define a modal
 by providing a custom rendering function.
 
